@@ -12,7 +12,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './Home'
 import Login from './Login'
 import {
-  View
+  View,
+  AsyncStorage
 } from "react-native";
 const Stack = createNativeStackNavigator();
 import AuthContext from './AuthContext';
@@ -24,6 +25,12 @@ class App extends Component {
       login: this.login,
       logout: this.logout,
     };
+  }
+  async componentDidMount(){
+    const info=await AsyncStorage.getItem('info')
+    this.setState({
+      isSignedIn:info?true:false
+    })
   }
   login = () => {
     this.setState({isSignedIn: true});
